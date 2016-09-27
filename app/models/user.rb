@@ -4,8 +4,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  scope :guest, lambda {where(:guest => true)}
 
-def update_with_password(params, *options)
+
+  def update_with_password(params, *options)
     current_password = params.delete(:current_password)
 
     if params[:password].blank?
@@ -24,7 +26,7 @@ def update_with_password(params, *options)
 
     clean_up_passwords
     result
-end
+  end
 
 
 end
